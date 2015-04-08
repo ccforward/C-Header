@@ -1,0 +1,30 @@
+{
+   "name": "C-HEADER",
+   "version": "0.0.1",
+   "description": "Control Your HTTP Headers",
+   "icons": {
+      "128": "img/icon_128.png",
+      "16": "img/icon_16.png",
+      "48": "img/icon_48.png",
+      "64": "img/icon_64.png"
+   },
+   // "content_scripts": [ {
+   //    "all_frames": true,
+   //    "js": [ "content.js" ], // 在当前页面加载
+   //    "matches": [ "http://*/*", "https://*/*" ]
+   // } ],
+   "options_page": "option.html",
+   "browser_action": {
+      "default_icon": "img/icon_128.png",
+      "default_title": "Control Your HTTP Headers",
+      "default_popup": "pop.html"
+   },
+   "background": {
+      "scripts": ["background.js"]
+   },
+
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+   "manifest_version": 2,
+   "permissions": [ "contextMenus", "tabs", "http://*/*", "https://*/*", "webRequest", "webRequestBlocking" ]
+}
