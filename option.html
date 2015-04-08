@@ -4,88 +4,8 @@
 <meta charset="utf-8" />
 <title>选项</title>
 <link rel="stylesheet" href="assets/common.css">
+<link rel="stylesheet" href="assets/option.css">
 </head>
-<style>
-    header {
-        padding: 20px 0;
-        width: 100%;
-        height: 50px;
-        line-height: 50px;
-        background: #333;
-        color: #F74348;
-        font-size: 40px;
-        text-align: center;
-
-    }
-    .wrap {
-        width: 600px;
-        margin: 20px auto;
-        font-family: 'Hiragino Sans GB',"Microsoft Yahei","helvetica neue",arial,sans-serif;
-    }
-    .wrap .desc p {
-        display: inline-block;
-        width: 46%;
-        font-size: 20px;
-        color: #333;
-        margin-bottom: 5px;
-    }
-    .header-list .h-item {
-        height: 120px;
-        margin-bottom: 5px;
-    }
-    .header-list .h-item .h-key {
-        display: inline-block;
-        width: 275px;
-        height: 120px;
-        line-height: 120px;
-        text-align: center;
-        vertical-align: top;
-        font-size: 35px;
-        background: #F74348;
-        color: #fff;
-        cursor: pointer;
-    }
-    .header-list .h-item .h-value {
-        display: inline-block;
-        float: right;
-        width: 300px;
-        height: 100px;
-        padding: 9px;
-        border: 1px solid #333;
-    }
-    .header-list .h-item .h-value textarea {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        resize: none;
-        border: 0 none;
-        /*outline: 1px solid #f60;*/
-        font-size: 14px;
-
-    }
-    .control {
-        margin-top: 20px;
-        
-    }
-    .btn {
-        display: inline-block;
-        width: 80px;
-        height: 40px;
-        line-height: 40px;
-        color: #fff;
-        border-radius: 5px;
-        text-align: center;
-        cursor: pointer;
-        font-size: 20px;
-    }
-    .add-btn {
-        background: #9c0;
-    }
-    .save-btn {
-        background: #F74348;
-    }
-
-</style>
 <body>
     
     <header>
@@ -97,23 +17,13 @@
             <p>预设值</p>
         </div>
         <div class="header-list">
-            <div class="h-item">
-                <div class="h-key">
-                    test
-                    <!-- <div class="update">
-                        <a href="" >edit</a>
-                        <a href="" >delete</a>
-                    </div> -->
-                </div>
-                <div class="h-value">
-                    <textarea>test=22</textarea>
-                </div>
-            </div>
+            
         </div>
 
         <div class="control">
             <a class="btn add-btn" id="J_Add">新 增</a>
             <a class="btn save-btn" id="J_Save">保 存</a>
+            <a class="btn clear-btn" id="J_Clear">清 空</a>
         </div>
     </div>
 
@@ -121,14 +31,14 @@
 <script type="text/tmpl" id="J_KeyTmpl">
     <div class="h-item">
         <div class="h-key">
-            {{key}}
+            <%this.name%>
             <!-- <div class="update">
                 <a href="" >edit</a>
                 <a href="" >delete</a>
             </div> -->
         </div>
         <div class="h-value">
-            <textarea></textarea>
+            <textarea><%this.value%></textarea>
         </div>
     </div>    
 </script>
