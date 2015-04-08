@@ -23,19 +23,19 @@
         <div class="control">
             <a class="btn add-btn" id="J_Add">新 增</a>
             <a class="btn save-btn" id="J_Save">保 存</a>
-            <a class="btn clear-btn" id="J_Clear">清 空</a>
+            <a class="btn clear-btn fr" id="J_Clear">清 空</a>
         </div>
     </div>
 
 <script type="text/javascript" src="assets/jquery.js"></script>
 <script type="text/tmpl" id="J_KeyTmpl">
-    <div class="h-item">
+    <div class="h-item" data-name="<%this.name%>">
         <div class="h-key">
             <%this.name%>
-            <!-- <div class="update">
-                <a href="" >edit</a>
-                <a href="" >delete</a>
-            </div> -->
+            <div class="update-me">
+                <button class="J_Edit" data-name="<%this.name%>">Edit</button>
+                <button class="J_Delete" data-name="<%this.name%>">Delete</button>
+            </div>
         </div>
         <div class="h-value">
             <textarea><%this.value%></textarea>

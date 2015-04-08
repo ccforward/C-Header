@@ -35,6 +35,7 @@
             var _self = this;
             $('#J_Add').on('click', function(){
                 var key = prompt('请求头的名称');
+                // var value = prompt('请求头的值')
                 if(key){
                     var o = {
                         name: key,
@@ -46,42 +47,90 @@
             });
 
             $('#J_Save').on('click', function(){
-                var h = [{
-                    'name': 'referer',
-                    'value': 'www.baidu.com'
-                },{
-                    'name': 'test2',
-                    'value': 'test222'
-                }];
+                var h = [];
+                $('.h-item').each(function(idx,item){
+                    var o = {};
+                    o.name = $(this).attr('data-name');
+                    o.value = $(this).find('textarea').val();
+                    h.push(o);
+                });
                 chrome.runtime.sendMessage({
                     method: 'save',
                     data: h
                 }, _self._onSaveOver);
             });
             $('#J_Clear').on('click', function(){
+                if(confirm('Really')){
+                    chrome.runtime.sendMessage({
+                        method: 'clear'
+                    }, _self._onClearOver);
+                    
+                }
+            });
+
+            // Edit one's name
+            $('.header-list').delegate('.J_Edit' ,'click', function(e){
+                var name = $(e.currentTarget).attr('data-name');
                 chrome.runtime.sendMessage({
-                    method: 'clear'
-                }, _self._onClearOver);
-            });            
+                    method: 'edit',
+                    data: name
+                },function(d){
+                    d.result && alert('Edit Successfully')
+                });
+            });
+
+            // Delete One
+            $('.header-list').delegate('.J_Delete' ,'click', function(e){
+                var _self = this;
+                var target = $(e.currentTarget),
+                    name = target.attr('data-name'),
+                    value = target.parents('.h-item').find('textarea').val();
+                chrome.runtime.sendMessage({
+                    method: 'delete',
+                    data: name
+                },function(d){
+                    d.result && alert('Delete Successfully');
+                    target.parents('.h-item').hide(300).promise().done(function(){
+                        target.parents('.h-item').remove();
+                        if($('.h-item').length == 0){
+                            Util.addNothing();
+                        }
+                    });
+                });
+            });
+
+
 
         },
         _onLoadOver: function(d){
             if(d.result){
-                var output = '';
-                for(var i=0,len=d.data.length;i<len;i++){
-                   output += TemplateEngine(keyTmpl,d.data[i]);
+                if(d.data == null || d.data.length == 0){
+                    Util.addNothing();
+                }else {
+                    var output = '';
+                    for(var i=0,len=d.data.length;i<len;i++){
+                       output += TemplateEngine(keyTmpl,d.data[i]);
+                    }
+                    $('.header-list').html(output);
+                    
                 }
-                $('.header-list').html(output);
             }
         },
         _onSaveOver: function(d){
-            console.log(d);
+            d.result && alert('Save Successfully')
         },
         _onClearOver: function(d){
             if(d.result){
-                $('.header-list').html('')
+                Util.addNothing();
             }
-        }
+        },
+        
+
+    }
+    var Util = {
+        addNothing: function(){
+            $('.header-list').html('<p class="nothing">添加一条HTTP请求头</p>')
+        }        
     }
     Opt.init();
 }(jQuery)
