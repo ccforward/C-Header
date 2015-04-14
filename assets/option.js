@@ -1,23 +1,6 @@
 !function($){
     var keyTmpl = $('#J_KeyTmpl').html();
 
-    // http://blog.jobbole.com/56689/
-    var TemplateEngine = function(html, options) {
-        var re = /<%([^%>]+)?%>/g, reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g, code = 'var r=[];\n', cursor = 0;
-        var add = function(line, js) {
-            js? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n') :
-                (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
-            return add;
-        }
-        while(match = re.exec(html)) {
-            add(html.slice(cursor, match.index))(match[1], true);
-            cursor = match.index + match[0].length;
-        }
-        add(html.substr(cursor, html.length - cursor));
-        code += 'return r.join("");';
-        return new Function(code.replace(/[\r\t\n]/g, '')).apply(options);
-    }
-
 
     var Opt = {
         init: function(){
@@ -25,10 +8,9 @@
             this.events();
         },
         load: function(){
-            var _self = this;
             chrome.runtime.sendMessage({
                 method: 'get'
-            },_self._onLoadOver)
+            },this._onLoadOver)
         },
 
         events: function(){
@@ -47,6 +29,7 @@
             });
 
             $('#J_Save').on('click', function(){
+
                 var h = [];
                 $('.h-item').each(function(idx,item){
                     var o = {};
@@ -57,8 +40,9 @@
                 chrome.runtime.sendMessage({
                     method: 'save',
                     data: h
-                }, _self._onSaveOver);
-            });
+                }, this._onSaveOver);
+            }.bind(this));
+
             $('#J_Clear').on('click', function(){
                 if(confirm('Really')){
                     chrome.runtime.sendMessage({
@@ -81,35 +65,38 @@
 
             // Delete One
             $('.header-list').delegate('.J_Delete' ,'click', function(e){
-                var _self = this;
-                var target = $(e.currentTarget),
-                    name = target.attr('data-name'),
-                    value = target.parents('.h-item').find('textarea').val();
-                chrome.runtime.sendMessage({
-                    method: 'delete',
-                    data: name
-                },function(d){
-                    d.result && alert('Delete Successfully');
-                    target.parents('.h-item').hide(300).promise().done(function(){
-                        target.parents('.h-item').remove();
-                        if($('.h-item').length == 0){
-                            Util.addNothing();
-                        }
+                if(confirm('Really')){
+                    var target = $(e.currentTarget),
+                        name = target.attr('data-name');
+                    chrome.runtime.sendMessage({
+                        method: 'delete',
+                        data: name
+                    },function(d){
+                        d.result && alert('Delete Successfully');
+                        target.parents('.h-item').hide(300).promise().done(function(){
+                            target.parents('.h-item').remove();
+                            if($('.h-item').length == 0){
+                                Util.addNothing();
+                            }
+                        });
                     });
-                });
+                    
+                }
             });
-
-
-
+            $('.header-list').delegate('textarea' ,'focus', function(e){
+                $('#J_Save').addClass('breath');
+            });
         },
         _onLoadOver: function(d){
             if(d.result){
-                if(d.data == null || d.data.length == 0){
+                var headers = d.data.h,
+                    cfg = d.data.cfg
+                if(headers == null || headers == 0){
                     Util.addNothing();
                 }else {
                     var output = '';
-                    for(var i=0,len=d.data.length;i<len;i++){
-                       output += TemplateEngine(keyTmpl,d.data[i]);
+                    for(var i=0,len=headers.length;i<len;i++){
+                       output += TemplateEngine(keyTmpl,headers[i]);
                     }
                     $('.header-list').html(output);
                     
@@ -117,7 +104,8 @@
             }
         },
         _onSaveOver: function(d){
-            d.result && alert('Save Successfully')
+            d && d.result && alert('Save Successfully');
+            $('#J_Save').removeClass('breath');
         },
         _onClearOver: function(d){
             if(d.result){

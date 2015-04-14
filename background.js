@@ -4,41 +4,49 @@ function onMsg(msg, sender, response) {
     if (chrome.runtime.id != sender.id) return;
     switch(msg.method) {
         case 'save':
-            var headers = msg.data;
-            // localStorage.setItem('headers',JSON.stringify(headers));
+            var data = msg.data;
+            var chs = JSON.parse(localStorage.getItem('chs'));
+            chs.h = [];
+            for(var i=0,len=data.length;i<len;i++){
+                var header = data[i];
+                chs.h.push({
+                    name: header['name'],
+                    value: header['value']
+                });
+            }
+            localStorage.setItem('chs',JSON.stringify(chs));
             response({
                 result: !0
             });
         break;
         case 'get': 
-            // var o = JSON.parse(localStorage.getItem('headers'));
+            var o = JSON.parse(localStorage.getItem('chs'));
             response({
                 result: !0,
                 data: o
             });
         break;
-        case 'clear': 
-            // localStorage.removeItem('headers');
+        case 'clear':
+            var chs = JSON.parse(localStorage.getItem('chs'));
+            chs.h = [];         
+            localStorage.setItem('chs',JSON.stringify(chs));
             response({
                 result: !0
             });
         break;
         case 'edit':
-            // var o = JSON.parse(localStorage.getItem('headers'));
+            var o = JSON.parse(localStorage.getItem('chs'));
         break;
         case 'delete':
             var name = msg.data,
-                // h = JSON.parse(localStorage.getItem('headers'));
-            for(var i=0,len=h.length;i<len;i++){
-                if(h[i].name == name){
-                   h.splice(i,1);
+                chs = JSON.parse(localStorage.getItem('chs'));
+
+            for(var i=0,len=chs.h.length;i<len;i++){
+                if(chs.h[i].name == name){
+                   chs.h.splice(i,1);
                 }
             }
-            if(h.length == 0){
-                // localStorage.removeItem('headers');
-            }else {
-                // localStorage.setItem('headers',JSON.stringify(h));
-            }
+            localStorage.setItem('chs',JSON.stringify(chs));
             response({
                result: !0 
             })
@@ -46,6 +54,8 @@ function onMsg(msg, sender, response) {
     }
 
 }
+
+
 // storageEngine = {
 //     syncbuff: {},
 //     synctimeout: {},
@@ -69,10 +79,9 @@ function onMsg(msg, sender, response) {
 
 // 配置HTTP请求头
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
-    // var headers = JSON.parse(localStorage.getItem('headers'));
-    var h = {};
-    for(var i=0;i<headers.length;i++) {
-        details.requestHeaders.push(headers[i]);
+    var headers = JSON.parse(localStorage.getItem('chs'));
+    for(var i=0,len=headers.h.length;i<len;i++) {
+        details.requestHeaders.push(headers.h[i]);
     }
     return {requestHeaders: details.requestHeaders};
 }, {
@@ -88,7 +97,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
 
 // 安装后打开的页面
 chrome.runtime.onInstalled.addListener(function(e) {
-
     if(e.reason == "install"){
         window.open("option.html")
         var headers = {
@@ -97,6 +105,6 @@ chrome.runtime.onInstalled.addListener(function(e) {
             },
             h:[]
         }
-        localStorage.setItem('headers',JSON.stringify(headers))
+        localStorage.setItem('chs',JSON.stringify(headers))
     } 
 });

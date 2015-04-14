@@ -1,3 +1,4 @@
+
 header {
     padding: 20px 0;
     width: 100%;
@@ -115,6 +116,26 @@ header {
 .save-btn {
     background: #f60;
 }
+.save-btn.breath {
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-name: breathe;
+    -webkit-animation-duration: 300ms;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;    
+    
+}
 .clear-btn {
     background: #F74348;
+}
+
+@-webkit-keyframes breathe {
+    0% { 
+        opacity: .7; 
+        box-shadow:0 1px 2px rgba(255, 102, 0, 0.6);
+    }
+    100% { 
+        opacity: 1; 
+        border:1px solid #000; 
+        box-shadow:0 1px 30px #000;
+    }
 }

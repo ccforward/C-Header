@@ -1,12 +1,53 @@
 .wrap {
+    position: relative;
     width: 300px;
     height: 400px;
+    padding: 30px 15px;
+    background: #f1f1f1;
+}
+.option-link {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #f60;
+}
+.headers {
+    min-height: 320px;
+    font-size: 16px;
+
+}
+header {
+    margin-bottom: 10px;
+}
+header .h {
+    margin-right: 70px;
+}
+ul {
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+}
+.h-item {
+    height: 35px;
+    line-height: 35px; 
+}
+.h-item .name {
+    display: inline-block;
+    width: 40%;
+    border-right: 1px solid #ccc;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow:ellipsis;    
+}
+.h-item .value {
+    display: inline-block;
+    width: 55%;
+    overflow: hidden;
+    text-overflow:ellipsis;
 }
 
 
 
-
-.slider-btn {
+.switch-btn {
     position: relative;
     display: block;
     width: 5.5em;
@@ -18,7 +59,7 @@
     box-shadow: 0 0.07em 0.1em -0.1em rgba(0, 0, 0, 0.4) inset, 0 0.05em 0.08em -0.01em rgba(255, 255, 255, 0.7);
 }
 
-.slider-btn::after {
+.switch-btn::after {
     position: absolute;
     content: '';
     width: 2em;
@@ -30,7 +71,7 @@
     background: linear-gradient(#f5f5f5 10%, #eeeeee);
     box-shadow: 0 0.1em 0.15em -0.05em rgba(255, 255, 255, 0.9) inset, 0 0.2em 0.2em -0.12em rgba(0, 0, 0, 0.5);
 }
-.slider-btn::before {
+.switch-btn::before {
     position: absolute;
     content: '';
     width: 4em;
@@ -42,9 +83,9 @@
     background: linear-gradient(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1)), #d0d0d0;
     box-shadow: 0 0.08em 0.15em -0.1em rgba(0, 0, 0, 0.5) inset, 0 0.05em 0.08em -0.01em rgba(255, 255, 255, 0.7), 0 0 0 0 rgba(68, 204, 102, 0.7) inset;
 }
-.slider-btn.on::before {
+.switch-btn.on::before {
     box-shadow: 0 0.08em 0.15em -0.1em rgba(0, 0, 0, 0.5) inset, 0 0.05em 0.08em -0.01em rgba(255, 255, 255, 0.7), 3em 0 0 0 rgba(68, 204, 102, 0.7) inset;
 }
-.slider-btn.on::after {
+.switch-btn.on::after {
     left: 3em;
 }
