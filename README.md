@@ -2,6 +2,7 @@
 
 c-Header 一个修改请求页面HTTP头的chrome扩展 
 
+[chrome市场地址](https://chrome.google.com/webstore/detail/c-header/cpkhilpjaiopicjdglhldbgamilgegnd)
 
 ## localStorage的存储结构
 
