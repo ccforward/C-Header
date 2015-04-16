@@ -49,8 +49,26 @@ function onMsg(msg, sender, response) {
             localStorage.setItem('chs',JSON.stringify(chs));
             response({
                result: !0 
-            })
+            });
         break;
+        case 'switch':
+            var chs = JSON.parse(localStorage.getItem('chs')),
+                mod = msg.data.mod;
+            if(mod == 'run'){
+                chs.cfg.run = true;
+            }else {
+                chs.cfg.run = false;
+            }
+            localStorage.setItem('chs',JSON.stringify(chs));
+            response({
+               result: !0,
+               data: chs.cfg.run
+            });           
+            break;
+        default:
+            response({
+               result: !!0 
+            });          
     }
 
 }
@@ -79,9 +97,11 @@ function onMsg(msg, sender, response) {
 
 // 配置HTTP请求头
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
-    var headers = JSON.parse(localStorage.getItem('chs'));
-    for(var i=0,len=headers.h.length;i<len;i++) {
-        details.requestHeaders.push(headers.h[i]);
+    var chs = JSON.parse(localStorage.getItem('chs'));
+    if(chs.cfg.run){
+        for(var i=0,len=chs.h.length;i<len;i++) {
+            details.requestHeaders.push(chs.h[i]);
+        }
     }
     return {requestHeaders: details.requestHeaders};
 }, {

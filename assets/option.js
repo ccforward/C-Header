@@ -28,12 +28,12 @@
                 }
             });
 
+            // save
             $('#J_Save').on('click', function(){
-
                 var h = [];
                 $('.h-item').each(function(idx,item){
                     var o = {};
-                    o.name = $(this).attr('data-name');
+                    o.name = $(this).find('.key-val').html();
                     o.value = $(this).find('textarea').val();
                     h.push(o);
                 });
@@ -54,13 +54,13 @@
 
             // Edit one's name
             $('.header-list').delegate('.J_Edit' ,'click', function(e){
-                var name = $(e.currentTarget).attr('data-name');
-                chrome.runtime.sendMessage({
-                    method: 'edit',
-                    data: name
-                },function(d){
-                    d.result && alert('Edit Successfully')
-                });
+                var key = $(e.currentTarget).parents('.h-key').find('.key-val'),
+                    name = prompt('请求头的名称',key.html());
+                if(name){
+                    key.html(name);
+                    $('#J_Save').addClass('breath');
+                }
+
             });
 
             // Delete One
