@@ -67,7 +67,7 @@
             $('.header-list').delegate('.J_Delete' ,'click', function(e){
                 if(confirm('Really')){
                     var target = $(e.currentTarget),
-                        name = target.attr('data-name');
+                        name = $(e.currentTarget).parents('.h-key').find('.key-val').html();
                     chrome.runtime.sendMessage({
                         method: 'delete',
                         data: name
