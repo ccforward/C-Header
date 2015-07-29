@@ -99,6 +99,7 @@ function onMsg(msg, sender, response) {
 // 配置HTTP请求头
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
     var chs = JSON.parse(localStorage.getItem('chs'));
+    console.log(chs);
     if(chs.cfg.run){
         for(var i=0,len=chs.h.length;i<len;i++) {
             if(chs.h[i]['status'] == 'on'){

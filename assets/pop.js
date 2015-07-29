@@ -1,6 +1,4 @@
 !(function($){
-
-
     var tmpl = '';
     var POP = {
         init: function(){

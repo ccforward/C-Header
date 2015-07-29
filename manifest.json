@@ -1,7 +1,7 @@
 {
    "manifest_version": 2,
    "name": "C-HEADER",
-   "version": "0.0.1",
+   "version": "0.0.2",
    "description": "Control Your HTTP Headers",
    "icons": {
       "128": "img/icon_128.png",
