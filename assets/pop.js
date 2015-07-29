@@ -16,7 +16,7 @@
                     var headers = d.data.h,
                         cfg = d.data.cfg;               
                     for(var i=0,len=headers.length;i<len;i++){
-                        output += '<li class="h-item"><p class="name">'+headers[i]['name']+'</p>'+
+                        output += '<li class="h-item ' + headers[i]['status'] + '" data-status="' + headers[i]['status'] + '"><p class="name">'+headers[i]['name']+'</p>'+
                         '<p class="value" title="' + headers[i]['value'] + '">' + headers[i]['value'] + '</p></li>';
                     }
                     if(cfg.run){
@@ -28,6 +28,7 @@
             })            
         },
         events: function(){
+            var _self = this;
             $('#J_SwicthBtn').click(function(){
                 $(this).toggleClass('on');
                 if($(this).hasClass('on')){
@@ -35,7 +36,9 @@
                     chrome.runtime.sendMessage({
                         method: 'switch',
                         data: {mod:'run'}
-                    },function(d){});                    
+                    },function(d){
+                        console.log(d);
+                    });                    
                 }else {
                     // stop
                     chrome.runtime.sendMessage({
@@ -46,12 +49,38 @@
             });
             $('.option-link').on('click',function(e){
                 e.preventDefault();
-                chrome.tabs.create({url:'option.html'})
+                chrome.tabs.create({url:'option.html'});
             });
-            $('.h-item').on('click', function(e){
-                var target = e.currentTarget;
-                $(this).css({'background':'#9c0'});
+            $('#J_HeaderList').on('click', '.h-item', function(e){
+                console.log(e);
+                var status = $(this).attr('data-status');
+                if(status == 'on'){
+                    // off
+                    $(this).removeClass('on');
+                    $(this).attr('data-status', 'off');
+                    _self._updateStatus();
+                }else {
+                    // on
+                    $(this).addClass('on');
+                    $(this).attr('data-status', 'on');
+                    _self._updateStatus();
+                }
             });
+        },
+        _updateStatus: function(){
+            var _self = this,
+                h = [];
+            $('.h-item').each(function(idx,item){
+                var o = {};
+                o.name = $(this).find('.name').html();
+                o.value = $(this).find('.value').html();
+                o.status = $(this).attr('data-status');
+                h.push(o);
+            });
+            chrome.runtime.sendMessage({
+                method: 'save',
+                data: h
+            }, function(){});          
         }
     }
     POP.init();

@@ -101,7 +101,9 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details){
     var chs = JSON.parse(localStorage.getItem('chs'));
     if(chs.cfg.run){
         for(var i=0,len=chs.h.length;i<len;i++) {
-            details.requestHeaders.push(chs.h[i]);
+            if(chs.h[i]['status'] == 'on'){
+                details.requestHeaders.push(chs.h[i]);
+            }
         }
     }
     return {requestHeaders: details.requestHeaders};

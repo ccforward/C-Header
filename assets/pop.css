@@ -28,10 +28,19 @@ ul {
 }
 .h-item {
     height: 35px;
-    line-height: 35px; 
+    line-height: 35px;
+    margin-top: 5px;
+    border-radius: 3px;
+}
+.h-item.on {
+    background: #9c0;
+    color: #fff;
 }
 .h-item:hover {
     cursor: pointer;
+}
+.h-item.on .name {
+    border-color: #fff;
 }
 .h-item .name {
     display: inline-block;
