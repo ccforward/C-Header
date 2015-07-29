@@ -4,8 +4,8 @@
     var tmpl = '';
     var POP = {
         init: function(){
-            this.events();
             this.load();
+            this.events();
         },
         load: function(){
             var output = '';
@@ -17,7 +17,7 @@
                         cfg = d.data.cfg;               
                     for(var i=0,len=headers.length;i<len;i++){
                         output += '<li class="h-item"><p class="name">'+headers[i]['name']+'</p>'+
-                        '<p class="value">'+headers[i]['value']+'</p></li>';
+                        '<p class="value" title="' + headers[i]['value'] + '">' + headers[i]['value'] + '</p></li>';
                     }
                     if(cfg.run){
                         $('#J_SwicthBtn').addClass('on');
@@ -47,7 +47,11 @@
             $('.option-link').on('click',function(e){
                 e.preventDefault();
                 chrome.tabs.create({url:'option.html'})
-            });         
+            });
+            $('.h-item').on('click', function(e){
+                var target = e.currentTarget;
+                $(this).css({'background':'#9c0'});
+            });
         }
     }
     POP.init();

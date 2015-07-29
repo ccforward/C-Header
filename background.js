@@ -11,7 +11,8 @@ function onMsg(msg, sender, response) {
                 var header = data[i];
                 chs.h.push({
                     name: header['name'],
-                    value: header['value']
+                    value: header['value'],
+                    status: header['status']
                 });
             }
             localStorage.setItem('chs',JSON.stringify(chs));

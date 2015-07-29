@@ -30,17 +30,23 @@ ul {
     height: 35px;
     line-height: 35px; 
 }
+.h-item:hover {
+    cursor: pointer;
+}
 .h-item .name {
     display: inline-block;
     width: 40%;
+    height: 35px;
     border-right: 1px solid #ccc;
     margin-right: 10px;
     overflow: hidden;
+    text-indent: 10px;
     text-overflow:ellipsis;    
 }
 .h-item .value {
     display: inline-block;
     width: 55%;
+    height: 35px;
     overflow: hidden;
     text-overflow:ellipsis;
 }

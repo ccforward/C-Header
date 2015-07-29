@@ -21,7 +21,8 @@
                 if(key){
                     var o = {
                         name: key,
-                        value: ''
+                        value: '',
+                        status: 'on'
                     }
                     var tpl = TemplateEngine(keyTmpl,o)
                     $('.header-list').append(tpl);
@@ -35,6 +36,7 @@
                     var o = {};
                     o.name = $(this).find('.key-val').html();
                     o.value = $(this).find('textarea').val();
+                    o.status = $(this).attr('data-status');
                     h.push(o);
                 });
                 chrome.runtime.sendMessage({
