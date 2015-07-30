@@ -50,7 +50,6 @@
                 chrome.tabs.create({url:'option.html'});
             });
             $('#J_HeaderList').on('click', '.h-item', function(e){
-                console.log(e);
                 var status = $(this).attr('data-status');
                 if(status == 'on'){
                     // off
