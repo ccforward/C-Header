@@ -15,6 +15,7 @@ C-Header 一个修改请求页面HTTP头的chrome扩展
 ## localStorage的存储结构
 
 c-headers 简写 chs
+
 ```
 chs:{
     cfg: {

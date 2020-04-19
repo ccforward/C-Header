@@ -101,7 +101,8 @@ header {
 }
 .btn {
     display: inline-block;
-    width: 80px;
+    min-width: 60px;
+    padding: 0 10px;
     height: 40px;
     line-height: 40px;
     color: #fff;
@@ -112,6 +113,14 @@ header {
 }
 .add-btn {
     background: #9c0;
+}
+.god-btn {
+    background: #9c0;
+    margin-top: 40px;
+}
+.god-data {
+    height: 30px;
+    min-width: 150px;
 }
 .save-btn {
     background: #f60;

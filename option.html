@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="assets/option.css">
 </head>
 <body>
-    
+
     <header>
         Control Heders
     </header>
@@ -17,7 +17,9 @@
             <p>预设值</p>
         </div>
         <div class="header-list">
-            
+            <!-- debug-mode-t -->
+            <!-- debug-mode-sign -->
+
         </div>
 
         <div class="control">
@@ -25,6 +27,9 @@
             <a class="btn save-btn" id="J_Save">保 存</a>
             <a class="btn clear-btn fr" id="J_Clear">清 空</a>
         </div>
+        <a class="btn god-btn" id="J_God">GOD LOGIN</a>
+        <input type="text" class="god-data god-login-t"/>
+        <input type="text" class="god-data god-login-sign"/>
     </div>
 
 <script type="text/javascript" src="assets/jquery.js"></script>
@@ -40,9 +45,10 @@
         <div class="h-value">
             <textarea><%this.value%></textarea>
         </div>
-    </div>    
+    </div>
 </script>
 <script type="text/javascript" src="assets/template.js"></script>
+<script type="text/javascript" src="assets/md5.js"></script>
 <script type="text/javascript" src="assets/option.js"></script>
 </body>
 </html>
