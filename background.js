@@ -117,6 +117,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
 }, ["requestHeaders", "blocking"]);
 
 
+// 改响应头
 chrome.webRequest.onHeadersReceived.addListener(details => {
   const { url } = details;
   if (url.indexOf('//cdn.jsdelivr.net/') > 0 && /htm/.test(url.split('/').reverse()[0])) {
