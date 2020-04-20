@@ -98,7 +98,6 @@ function onMsg(msg, sender, response) {
 
 // 配置HTTP请求头
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
-  console.log(details);
   var chs = JSON.parse(localStorage.getItem('chs'));
   localStorage.setItem('details', JSON.stringify(details));
   if (chs.cfg.run) {
@@ -116,6 +115,20 @@ chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
 }, {
   urls: ["http://*/*", "https://*/*"]
 }, ["requestHeaders", "blocking"]);
+
+
+chrome.webRequest.onHeadersReceived.addListener(details => {
+  const { url } = details;
+  if (url.indexOf('//cdn.jsdelivr.net/') > 0 && /htm/.test(url.split('/').reverse()[0])) {
+    let header = details.responseHeaders.find(e => e.name.toLowerCase() === 'content-type');
+    header.value = 'text/html; charset=utf-8';
+  }
+  return {
+    responseHeaders: details.responseHeaders
+  };
+}, {
+  urls: ["http://*/*", "https://*/*"]
+}, ['blocking', 'responseHeaders']);
 
 // 安装后打开的页面
 chrome.runtime.onInstalled.addListener(function(e) {
